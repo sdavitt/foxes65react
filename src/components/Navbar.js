@@ -25,6 +25,14 @@ export default class Navbar extends Component {
                         <li className="nav-item">
                         <Link className="nav-link" to="/F1">F1 Driver Data</Link>
                         </li>
+                        <li className="nav-item">
+                        <Link className="nav-link" to="/shop">Exotic Pet Store</Link>
+                        </li>
+                    </ul>
+                    <ul className="navbar-nav mb-2 mb-lg-0 justify-content-end">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/cart">Cart</Link>
+                        </li>
                     </ul>
                     </div>
                 </div>

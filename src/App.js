@@ -8,6 +8,8 @@ import About from './views/About';
 import Contact from './views/Contact';
 import F1 from './views/F1';
 import axios from 'axios';
+import Shop from './views/Shop';
+import Cart from './views/Cart';
 
 
 export default class App extends Component {
@@ -17,7 +19,11 @@ export default class App extends Component {
     this.state = {
       name: 'Sam Davitt',
       students: ['Todd', 'Marwa', 'Colby', 'Michael', 'Emily', 'Aaron'],
-      drivers: []
+      drivers: [],
+      cart: []
+      // my cart will have products in it
+      // each cart will be an object containing:
+      // { name: p.name, product: product, quantity: __ }
     }
   }
 
@@ -63,6 +69,8 @@ export default class App extends Component {
             <Route path='/about' render={() => <About title={'Foxes65 | About'} name={this.state.name}/>}/>
             <Route path='/contact' render={() => <Contact title={'Foxes65 | Contact'} />}/>
             <Route path='/F1' render={() => <F1 f1APIdata={this.f1APIdata} drivers={this.state.drivers}/>}/>
+            <Route path='/shop' render={() => <Shop />}/>
+            <Route path='/cart' render={() => <Cart />}/>
           </Switch>
         </main>
       </div>
