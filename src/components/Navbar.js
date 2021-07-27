@@ -30,8 +30,11 @@ export default class Navbar extends Component {
                         </li>
                     </ul>
                     <ul className="navbar-nav mb-2 mb-lg-0 justify-content-end">
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/cart">Cart</Link>
+                        <li className="nav-item btn btn-info p-0">
+                            <Link className="nav-link" to="/cart">
+                            <i className="fa fa-shopping-cart"></i>
+                            <span className=""> | {this.props.cart.length} | ${this.props.total.toFixed(2)} </span>
+                            </Link>
                         </li>
                     </ul>
                     </div>

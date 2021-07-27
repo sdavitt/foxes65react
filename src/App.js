@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { Component } from 'react';
 import {Switch, Route} from 'react-router-dom';
@@ -20,10 +19,8 @@ export default class App extends Component {
       name: 'Sam Davitt',
       students: ['Todd', 'Marwa', 'Colby', 'Michael', 'Emily', 'Aaron'],
       drivers: [],
-      cart: []
-      // my cart will have products in it
-      // each cart will be an object containing:
-      // { name: p.name, product: product, quantity: __ }
+      cart: [],
+      total: 0
     }
   }
 
@@ -58,19 +55,35 @@ export default class App extends Component {
     event.target.reset(); // reset form data so we can resubmit
   }
 
+  addToCart = (product) => {
+    this.state.cart.push(product);
+    this.setState({total: this.state.total+product.price});
+    this.setState();
+  }
+
+  removeFromCart = (product) => {
+    for(let i=0; i<this.state.cart.length; i++){
+      if( this.state.cart[i].id === product.id){
+        this.state.cart.splice(i,1);
+        break;
+      }
+    }
+    this.setState({total: this.state.total-product.price});
+    this.setState();
+  }
+
   render() {
-    console.log(this.state.drivers);
     return (
       <div>
-        <Navbar />
+        <Navbar cart={this.state.cart} total={this.state.total}/>
         <main className="container">
           <Switch>
             <Route exact path='/' render={() => <Home title={'Foxes65 | Home'} newprop={'Hi Colby'} name={this.state.name} students={this.state.students}/>}/>
             <Route path='/about' render={() => <About title={'Foxes65 | About'} name={this.state.name}/>}/>
             <Route path='/contact' render={() => <Contact title={'Foxes65 | Contact'} />}/>
             <Route path='/F1' render={() => <F1 f1APIdata={this.f1APIdata} drivers={this.state.drivers}/>}/>
-            <Route path='/shop' render={() => <Shop />}/>
-            <Route path='/cart' render={() => <Cart />}/>
+            <Route path='/shop' render={() => <Shop addToCart={this.addToCart}/>}/>
+            <Route path='/cart' render={() => <Cart cart={this.state.cart} total={this.state.total} removeFromCart={this.removeFromCart}/>}/>
           </Switch>
         </main>
       </div>
