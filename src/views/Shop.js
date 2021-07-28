@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import Product from '../components/Product';
+import axios from 'axios';
 
 export default class Shop extends Component{
     constructor(){
         super();
-
         /*
         My store's products will be stored in the Shop component's state as an array
         Each product will be an object with the following properties
@@ -15,15 +15,23 @@ export default class Shop extends Component{
         image
         */
         this.state = {
-            products: [
-                {id: 1, name: 'Fennec Fox', price: 4500, desc: 'A small African desert fox with giant ears.', image: 'https://animals.sandiegozoo.org/sites/default/files/2016-10/fennec_fox_0.jpg'},
-                {id: 2, name: 'Ocelot', price: 3000, desc: 'A fox-eared cat named Babou. Previously owned by Salvador Dali.', image: 'https://decider.com/wp-content/uploads/2017/02/archer-ocelot.jpg?quality=80&strip=all&w=978'},
-                {id: 3, name: 'Quokka', price: 1500, desc: 'Always smiling. :)', image: 'https://critter.science/wp-content/uploads/2020/05/quokka1.png'},
-                {id: 4, name: 'Petite Lap Giraffe', price: 99999, desc: 'The pinnacle of luxury animals.', image: 'https://via.placeholder.com/150'}
-            ]
+            products: []
         }
+        this.setProducts();
     }
 
+    // Add in an api call function 
+    shopAPIcall = async () => {
+        let response = await axios.get('https://foxes65api.herokuapp.com/products')
+        return response.data
+    }
+
+    // and a function to call that api function/set the resulting data as my products
+    setProducts = async () => {
+        let data = await this.shopAPIcall()
+        this.setState({products: data})
+    }
+    
 
     render() {
         return(

@@ -10,7 +10,6 @@ import axios from 'axios';
 import Shop from './views/Shop';
 import Cart from './views/Cart';
 
-
 export default class App extends Component {
   constructor(){
     super();

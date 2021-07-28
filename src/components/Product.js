@@ -7,7 +7,7 @@ export default class Product extends Component {
         let p = this.props.product;
         return (
             <div className="card" style={{width: 18+'rem', marginRight: 10+'px'}}>
-                <img src={p.image} className="card-img-top product-image" alt="animal" />
+                <img src={p.img} className="card-img-top product-image" alt="animal" />
                     <div className="card-body">
                         <h5 className="card-title">{p.name}</h5>
                         <p className="card-text">{p.desc}</p>
