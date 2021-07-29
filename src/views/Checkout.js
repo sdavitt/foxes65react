@@ -14,7 +14,7 @@ const Checkout = (props) => {
     let [confirm_num, setConfirm_num] = React.useState('');
     
     const payAPI = async (amount) => {
-        let request = await axios.post('http://localhost:5000/pay', {amnt:amount*100})
+        let request = await axios.post('https://foxes65api.herokuapp.com/pay', {amnt:amount*100})
         return request.data
     }
 
