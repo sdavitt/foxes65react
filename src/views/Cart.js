@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Cart extends Component{
     getUniqueCart = (cart) =>{
@@ -65,7 +66,7 @@ export default class Cart extends Component{
                             <td></td>
                             <td>${this.props.total.toFixed(2)}</td>
                             <td>
-                                <button className="btn btn-success">Checkout</button>
+                                <Link to='/checkout'><button className="btn btn-success">Checkout</button></Link>
                             </td>
                         </tr>
                     </tfoot>

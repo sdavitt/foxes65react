@@ -9,6 +9,8 @@ import F1 from './views/F1';
 import axios from 'axios';
 import Shop from './views/Shop';
 import Cart from './views/Cart';
+import Checkout from './views/Checkout';
+
 
 export default class App extends Component {
   constructor(){
@@ -82,7 +84,8 @@ export default class App extends Component {
             <Route path='/contact' render={() => <Contact title={'Foxes65 | Contact'} />}/>
             <Route path='/F1' render={() => <F1 f1APIdata={this.f1APIdata} drivers={this.state.drivers}/>}/>
             <Route path='/shop' render={() => <Shop addToCart={this.addToCart}/>}/>
-            <Route path='/cart' render={() => <Cart cart={this.state.cart} total={this.state.total} removeFromCart={this.removeFromCart}/>}/>
+            <Route path='/cart' render={() => <Cart cart={this.state.cart} total={this.state.total} removeFromCart={this.removeFromCart} stripe={this.props.stripe}/>}/>
+            <Route path='/checkout' render = {() => <Checkout stripe={this.props.stripe}/>}/>
           </Switch>
         </main>
       </div>
