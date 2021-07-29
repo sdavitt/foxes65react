@@ -66,7 +66,12 @@ export default class Cart extends Component{
                             <td></td>
                             <td>${this.props.total.toFixed(2)}</td>
                             <td>
-                                <Link to='/checkout'><button className="btn btn-success">Checkout</button></Link>
+                                { this.props.total !== 0 ?
+                                    <Link to='/checkout'><button className="btn btn-success">Checkout</button></Link>
+                                    :
+                                    <Link to='/shop'><button className="btn btn-info">Shop</button></Link>
+                                }
+                                
                             </td>
                         </tr>
                     </tfoot>

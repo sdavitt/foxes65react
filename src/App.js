@@ -84,8 +84,8 @@ export default class App extends Component {
             <Route path='/contact' render={() => <Contact title={'Foxes65 | Contact'} />}/>
             <Route path='/F1' render={() => <F1 f1APIdata={this.f1APIdata} drivers={this.state.drivers}/>}/>
             <Route path='/shop' render={() => <Shop addToCart={this.addToCart}/>}/>
-            <Route path='/cart' render={() => <Cart cart={this.state.cart} total={this.state.total} removeFromCart={this.removeFromCart} stripe={this.props.stripe}/>}/>
-            <Route path='/checkout' render = {() => <Checkout stripe={this.props.stripe}/>}/>
+            <Route path='/cart' render={() => <Cart cart={this.state.cart} total={this.state.total} removeFromCart={this.removeFromCart}/>}/>
+            <Route path='/checkout' render = {() => <Checkout total={this.state.total}/>}/>
           </Switch>
         </main>
       </div>
