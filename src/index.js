@@ -9,7 +9,9 @@ import { Elements } from '@stripe/react-stripe-js';
 import { firebaseConfig } from './config';
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/database";
 import { FirebaseAuthProvider} from '@react-firebase/auth';
+import { FirebaseDatabaseProvider } from '@react-firebase/database';
 
 const stripePromise = loadStripe('pk_test_51JIDZiCXwiQzHBRpAVDdnY3jaleulH28kKQrCcSF7FPh99yLLp7q8iXKWyrvUXrnPAteYhizm7TzyfB5Rw5cll5G002rXatnh2')
 
@@ -17,9 +19,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
     <FirebaseAuthProvider {...firebaseConfig} firebase={firebase}>
+      <FirebaseDatabaseProvider {...firebaseConfig} firebase={firebase}>
         <Elements stripe={stripePromise} >
           <App />
         </Elements>
+      </FirebaseDatabaseProvider>
     </FirebaseAuthProvider>
     </Router>
   </React.StrictMode>,

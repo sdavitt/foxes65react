@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@react-firebase/auth": "^0.2.10",
+    "@react-firebase/database": "^0.3.11",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.16.0",
     "@testing-library/jest-dom": "^5.14.1",

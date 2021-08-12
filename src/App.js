@@ -10,6 +10,10 @@ import axios from 'axios';
 import Shop from './views/Shop';
 import Cart from './views/Cart';
 import Checkout from './views/Checkout';
+import firebase from "firebase/app";
+import "firebase/database";
+import "firebase/auth";
+import { IfFirebaseAuthedAnd } from '@react-firebase/auth';
 
 
 
@@ -22,7 +26,8 @@ export default class App extends Component {
       students: ['Todd', 'Marwa', 'Colby', 'Michael', 'Emily', 'Aaron'],
       drivers: [],
       cart: [],
-      total: 0
+      total: 0,
+      dbval: ''
     }
   }
 
@@ -61,6 +66,7 @@ export default class App extends Component {
     this.state.cart.push(product);
     this.setState({total: this.state.total+product.price});
     this.setState();
+    this.setUserCart();
   }
 
   removeFromCart = (product) => {
@@ -72,16 +78,74 @@ export default class App extends Component {
     }
     this.setState({total: this.state.total-product.price});
     this.setState();
+    this.setUserCart();
   }
+
+  // let's try to connect to our database
+  // create a database ref
+  db = firebase.database();
+
+  // testing function
+  checkdb = () => {
+    let data = this.db.ref('Users/').get().then((snapshot) =>{
+      if (snapshot.exists()){
+        console.log(firebase.auth().currentUser.uid)
+        console.log(snapshot.val());
+        this.setState({dbval: snapshot.val()});
+      }
+      else{
+        console.log('no data');
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+    return data
+  }
+
+  // function to update a user's cart in our database
+  setUserCart = () => {
+    let updateCart = {};
+    updateCart['Users/' + firebase.auth().currentUser.uid] = this.state.cart;
+    return this.db.ref().update(updateCart);
+  }
+
+  // gets the total of our current state cart
+  getTotal = () => {
+    let total = 0.00;
+    this.state.cart.forEach(element => total += element.price);
+    return total
+  }
+
+  // updates our local cart from the firebase realtime database
+  getUserCart = () => {
+    let path = 'Users/' + firebase.auth().currentUser.uid
+    let data = this.db.ref(path).get().then((snapshot) =>{
+      if (snapshot.exists()){
+        console.log(firebase.auth().currentUser.uid)
+        console.log(snapshot.val());
+        this.setState({cart: snapshot.val()});
+        this.setState({total: this.getTotal()});
+      }
+      else{
+        console.log('no cart data for this user');
+      }
+    }).catch((error) => {
+      console.error(error);
+    })
+    return data
+  }
+
 
   render() {
     return (
       <div>
+        <IfFirebaseAuthedAnd filter={() => {if(this.state.cart.length === 0){this.getUserCart()}}}>
+        </IfFirebaseAuthedAnd>
         
-        <Navbar cart={this.state.cart} total={this.state.total}/>
+        <Navbar cart={this.state.cart} total={this.state.total} getUserCart={this.getUserCart}/>
         <main className="container">
           <Switch>
-            <Route exact path='/' render={() => <Home title={'Foxes65 | Home'} newprop={'Hi Colby'} name={this.state.name} students={this.state.students}/>}/>
+            <Route exact path='/' render={() => <Home title={'Foxes65 | Home'} newprop={'Hi Colby'} name={this.state.name} students={this.state.students} checkdb={this.checkdb}/>}/>
             <Route path='/about' render={() => <About title={'Foxes65 | About'} name={this.state.name}/>}/>
             <Route path='/contact' render={() => <Contact title={'Foxes65 | Contact'} />}/>
             <Route path='/F1' render={() => <F1 f1APIdata={this.f1APIdata} drivers={this.state.drivers}/>}/>
