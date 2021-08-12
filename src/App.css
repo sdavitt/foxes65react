@@ -40,3 +40,7 @@
 .product-image {
   max-height: 160px;
 }
+
+#signin {
+  margin-right: 0.5vw;
+}

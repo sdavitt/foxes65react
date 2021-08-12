@@ -12,6 +12,7 @@ import Cart from './views/Cart';
 import Checkout from './views/Checkout';
 
 
+
 export default class App extends Component {
   constructor(){
     super();
@@ -76,6 +77,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
+        
         <Navbar cart={this.state.cart} total={this.state.total}/>
         <main className="container">
           <Switch>
@@ -88,6 +90,7 @@ export default class App extends Component {
             <Route path='/checkout' render = {() => <Checkout total={this.state.total}/>}/>
           </Switch>
         </main>
+
       </div>
     )
   }

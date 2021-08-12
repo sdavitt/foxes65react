@@ -6,15 +6,21 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import { firebaseConfig } from './config';
+import firebase from "firebase/app";
+import "firebase/auth";
+import { FirebaseAuthProvider} from '@react-firebase/auth';
 
 const stripePromise = loadStripe('pk_test_51JIDZiCXwiQzHBRpAVDdnY3jaleulH28kKQrCcSF7FPh99yLLp7q8iXKWyrvUXrnPAteYhizm7TzyfB5Rw5cll5G002rXatnh2')
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Elements stripe={stripePromise} >
-        <App />
-      </Elements>
+    <FirebaseAuthProvider {...firebaseConfig} firebase={firebase}>
+        <Elements stripe={stripePromise} >
+          <App />
+        </Elements>
+    </FirebaseAuthProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

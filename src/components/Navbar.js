@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import firebase from "firebase/app";
+import "firebase/auth";
+import { IfFirebaseAuthed, IfFirebaseUnAuthed } from '@react-firebase/auth';
+
 
 export default class Navbar extends Component {
     render() {
@@ -30,12 +34,27 @@ export default class Navbar extends Component {
                         </li>
                     </ul>
                     <ul className="navbar-nav mb-2 mb-lg-0 justify-content-end">
+                        <IfFirebaseUnAuthed>
+                        <li id='signin' className="nav-item btn btn-info p-0"> 
+                        <Link className="nav-link" onClick={() => { 
+                            const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+                            firebase.auth().signInWithPopup(googleAuthProvider);
+                         }}>Sign-in</Link>
+                        </li>
+                        </IfFirebaseUnAuthed>
+                        <IfFirebaseAuthed>
+                            <li id='signin' className="nav-item btn btn-info p-0"> 
+                            <Link className="nav-link" onClick={() => { 
+                                firebase.auth().signOut();
+                            }}>Sign out</Link>
+                        </li>
                         <li className="nav-item btn btn-info p-0">
                             <Link className="nav-link" to="/cart">
                             <i className="fa fa-shopping-cart"></i>
                             <span className=""> | {this.props.cart.length} | ${this.props.total.toFixed(2)} </span>
                             </Link>
                         </li>
+                        </IfFirebaseAuthed>
                     </ul>
                     </div>
                 </div>
